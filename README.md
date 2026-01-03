@@ -1,6 +1,9 @@
 # UBuild-SingleFile
 
-A tool for bundling HTML, JavaScript, and CSS into a single self-contained HTML file with unique namespace prefixes to avoid conflicts in SquareSpace environments.
+A tool for bundling "Vanilla" HTML files and their imported, JavaScript, and CSS into a single self-contained HTML file with unique namespace prefixes to avoid conflicts in SquareSpace and other Code Block environments.
+
+This does not work on frameworks like React, Vue, Angular, etc. It is intended for simple HTML/JS/CSS projects.
+For more complex projects, consider using [UBuild-Url](https://github.com/vltmedia/UBuild-Url) .
 
 ## Features
 
