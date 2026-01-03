@@ -1,0 +1,125 @@
+name: Release (tag)
+
+on:
+  push:
+    tags:
+      - "*"   # tag-only. change to "v*" if you only want v1.2.3-style tags
+
+permissions:
+  contents: write
+
+env:
+  APP_NAME: ubuild-url
+
+jobs:
+  build:
+    name: Build (${{ matrix.name }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: windows-x64
+            os: windows-latest
+          - name: linux-x64
+            os: ubuntu-latest
+          - name: macos-x64
+            os: macos-14
+          - name: macos-arm64
+            os: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install deps
+        run: bun install --frozen-lockfile
+
+      # ---------- Build + Package ----------
+      - name: Build + Zip (Windows x64)
+        if: matrix.name == 'windows-x64'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+
+          # Build exe (with icon)
+          bun build index.ts --compile --target=bun-windows-x64 --windows-icon=logo.ico --outfile dist/${env:APP_NAME}.exe
+
+          # Zip name includes tag
+          $tag = "${{ github.ref_name }}"
+          $zip = "dist/${env:APP_NAME}-$tag-windows-x64.zip"
+
+          if (Test-Path $zip) { Remove-Item $zip -Force }
+          Compress-Archive -Path dist/${env:APP_NAME}.exe -DestinationPath $zip -Force
+
+      - name: Build + Zip (Linux x64)
+        if: matrix.name == 'linux-x64'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+
+          bun build index.ts --compile --target=bun-linux-x64 --outfile dist/${APP_NAME}
+          chmod +x dist/${APP_NAME}
+
+          tag="${GITHUB_REF_NAME}"
+          (cd dist && zip -9 -r "${APP_NAME}-${tag}-linux-x64.zip" "${APP_NAME}")
+
+      - name: Build + Zip (macOS x64)
+        if: matrix.name == 'macos-x64'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+
+          bun build index.ts --compile --target=bun-darwin-x64 --outfile dist/${APP_NAME}
+          chmod +x dist/${APP_NAME}
+
+          tag="${GITHUB_REF_NAME}"
+          (cd dist && zip -9 -r "${APP_NAME}-${tag}-macos-x64.zip" "${APP_NAME}")
+
+      - name: Build + Zip (macOS arm64)
+        if: matrix.name == 'macos-arm64'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+
+          bun build index.ts --compile --target=bun-darwin-arm64 --outfile dist/${APP_NAME}
+          chmod +x dist/${APP_NAME}
+
+          tag="${GITHUB_REF_NAME}"
+          (cd dist && zip -9 -r "${APP_NAME}-${tag}-macos-arm64.zip" "${APP_NAME}")
+
+      # Upload zip as artifact for the release job
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}
+          path: dist/*.zip
+
+  release:
+    name: Create GitHub Release (tag)
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: List artifacts
+        run: ls -R artifacts
+
+      - name: Publish Release and upload assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          files: artifacts/**/*.zip
+          fail_on_unmatched_files: true
