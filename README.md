@@ -17,6 +17,28 @@ A tool for bundling HTML, JavaScript, and CSS into a single self-contained HTML 
   - Avoids conflicts with SquareSpace's built-in styles
   - Ready for direct pasting into Code Blocks
 
+## Install
+
+### Linux
+```bash
+curl -L https://github.com/vltmedia/UBuild-SingleFile/releases/download/v1.0.0/ubuild-singlefile-v1.0.0-linux-x64.zip -o /tmp/ubuild.zip && sudo unzip -o /tmp/ubuild.zip -d /usr/local/bin
+
+```
+### Mac OSX
+```bash
+curl -L https://github.com/vltmedia/UBuild-SingleFile/releases/download/v1.0.0/ubuild-singlefile-v1.0.0-macos-x64.zip -o /tmp/ubuild.zip && sudo unzip -o /tmp/ubuild.zip -d /usr/local/bin
+
+```
+### Mac OSX (M Chips)
+```bash
+curl -L https://github.com/vltmedia/UBuild-SingleFile/releases/download/v1.0.0/ubuild-singlefile-v1.0.0-macos-arm64.zip -o /tmp/ubuild.zip && sudo unzip -o /tmp/ubuild.zip -d /usr/local/bin
+```
+### Windows
+Make sure to run PowerShell as Administrator, then run:
+```powershell
+iwr https://github.com/vltmedia/UBuild-SingleFile/releases/download/v1.0.0/ubuild-singlefile-v1.0.0-windows-x64.zip -OutFile $env:TEMP\ubuild.zip; Expand-Archive $env:TEMP\ubuild.zip $env:TEMP\ubuild -Force; Move-Item $env:TEMP\ubuild\ubuild-singlefile.exe C:\Windows\System32\ubuild-singlefile.exe -Force
+```
+
 ## Usage
 
 ### 1. Install Dependencies

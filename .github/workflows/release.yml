@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 env:
-  APP_NAME: ubuild-url
+  APP_NAME: ubuild-singlefile
 
 jobs:
   build:
