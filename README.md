@@ -72,7 +72,7 @@ bun run build-windows
 After building, you can use the generated `ubuild-singlefile` app as follows:
 
 ```bash
-ubuild-singlefile --htmlfile <input.html> [--output <output.html>] --namespace <prefix>
+ubuild-singlefile --htmlfile <input.html> [--output <./dist/output>] --namespace <prefix>
 ```
 
 **Arguments:**
@@ -89,7 +89,7 @@ ubuild-singlefile --htmlfile <input.html> [--output <output.html>] --namespace <
 ubuild-singlefile --namespace my-project-
 
 # With custom input/output paths
-ubuild-singlefile --htmlfile index.html --output output.html --namespace studio-
+ubuild-singlefile --htmlfile index.html --output output --namespace studio-
 
 # Build all pages (requires --all flag)
 ubuild-singlefile --all --namespace my-project-
