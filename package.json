@@ -10,8 +10,7 @@
     "build-windows": "bun build index.ts --compile --target=bun-windows-x64 --windows-icon=logo.ico --outfile ubuild-singlefile.exe"
   },
   "devDependencies": {
-    "@types/bun": "latest",
-    "esbuild": "^0.27.2"
+    "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5"

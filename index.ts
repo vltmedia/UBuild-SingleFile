@@ -1,4 +1,3 @@
-import esbuild from 'esbuild';
 import fs from 'fs';
 import  path from 'path';
 import { parseArgs } from "util";
@@ -282,18 +281,22 @@ async function buildPage(htmlPath: string): Promise<BuildResult> {
     fs.writeFileSync(tempEntryPath, entryContent);
     console.log(`  ✅ Created temp entry file`);
 
-    // Bundle and minify with esbuild
+    // Bundle and minify with Bun
     try {
-        await esbuild.build({
-            entryPoints: [tempEntryPath],
-            bundle: true,
+        const buildResult = await Bun.build({
+            entrypoints: [tempEntryPath],
             minify: true,
-            outfile: outputJsPath,
-            format: 'iife', // Immediately Invoked Function Expression - works in browsers
-            platform: 'browser',
-            target: 'es2022', // Updated to es2022 to support top-level await
-            sourcemap: true, // Generate sourcemap for debugging
+            outdir: outputDir,
+            naming: {
+                entry: 'bundle.js'
+            },
+            target: 'browser',
+            sourcemap: 'external', // Generate sourcemap for debugging
         });
+
+        if (!buildResult.success) {
+            throw new Error('Build failed: ' + buildResult.logs.map(log => log.message).join('\n'));
+        }
 
         console.log(`  ✅ Bundled and minified JavaScript`);
 

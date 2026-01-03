@@ -21,22 +21,22 @@ A tool for bundling HTML, JavaScript, and CSS into a single self-contained HTML 
 
 ### Linux
 ```bash
-curl -L https://github.com/vltmedia/UBuild-SingleFile/releases/download/v1.0.1/ubuild-singlefile-v1.0.1-linux-x64.zip -o /tmp/ubuild.zip && sudo unzip -o /tmp/ubuild.zip -d /usr/local/bin
+curl -L https://github.com/vltmedia/UBuild-SingleFile/releases/download/v1.0.2/ubuild-singlefile-v1.0.2-linux-x64.zip -o /tmp/ubuild.zip && sudo unzip -o /tmp/ubuild.zip -d /usr/local/bin
 
 ```
 ### Mac OSX
 ```bash
-curl -L https://github.com/vltmedia/UBuild-SingleFile/releases/download/v1.0.1/ubuild-singlefile-v1.0.1-macos-x64.zip -o /tmp/ubuild.zip && sudo unzip -o /tmp/ubuild.zip -d /usr/local/bin
+curl -L https://github.com/vltmedia/UBuild-SingleFile/releases/download/v1.0.2/ubuild-singlefile-v1.0.2-macos-x64.zip -o /tmp/ubuild.zip && sudo unzip -o /tmp/ubuild.zip -d /usr/local/bin
 
 ```
 ### Mac OSX (M Chips)
 ```bash
-curl -L https://github.com/vltmedia/UBuild-SingleFile/releases/download/v1.0.1/ubuild-singlefile-v1.0.1-windows-x64.zip -o /tmp/ubuild.zip && sudo unzip -o /tmp/ubuild.zip -d /usr/local/bin
+curl -L https://github.com/vltmedia/UBuild-SingleFile/releases/download/v1.0.2/ubuild-singlefile-v1.0.2-windows-x64.zip -o /tmp/ubuild.zip && sudo unzip -o /tmp/ubuild.zip -d /usr/local/bin
 ```
 ### Windows
 Make sure to run PowerShell as Administrator, then run:
 ```powershell
-iwr https://github.com/vltmedia/UBuild-SingleFile/releases/download/v1.0.1/ubuild-singlefile-v1.0.1-windows-x64.zip -OutFile $env:TEMP\ubuild.zip; Expand-Archive $env:TEMP\ubuild.zip $env:TEMP\ubuild -Force; Move-Item $env:TEMP\ubuild\ubuild-singlefile.exe C:\Windows\System32\ubuild-singlefile.exe -Force
+iwr https://github.com/vltmedia/UBuild-SingleFile/releases/download/v1.0.2/ubuild-singlefile-v1.0.2-windows-x64.zip -OutFile $env:TEMP\ubuild.zip; Expand-Archive $env:TEMP\ubuild.zip $env:TEMP\ubuild -Force; Move-Item $env:TEMP\ubuild\ubuild-singlefile.exe C:\Windows\System32\ubuild-singlefile.exe -Force
 ```
 
 ## Usage
